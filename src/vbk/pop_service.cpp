@@ -119,7 +119,9 @@ bool addAllBlockPayloads(const CBlock& block, BlockValidationState& state) EXCLU
 bool setState(const uint256& block, altintegration::ValidationState& state) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
 {
     AssertLockHeld(cs_main);
-    return GetPop().getAltBlockTree().setState(block.asVector(), state);
+    auto hash = block.asVector();
+    hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
+    return GetPop().getAltBlockTree().setState(hash, state);
 }
 
 altintegration::PopData generatePopData() EXCLUSIVE_LOCKS_REQUIRED(cs_main)
@@ -149,6 +151,7 @@ PoPRewards getPopRewards(const CBlockIndex& pindexPrev, const CChainParams& para
 
     altintegration::ValidationState state;
     auto prevHash = pindexPrev.GetBlockHash().asVector();
+    prevHash = std::vector<uint8_t>(prevHash.rbegin(), prevHash.rend());
     bool ret = pop.getAltBlockTree().setState(prevHash, state);
     VBK_ASSERT_MSG(ret, "error: %s", state.toString());
 

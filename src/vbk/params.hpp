@@ -20,7 +20,8 @@ struct AltChainParamsVBTC : public altintegration::AltChainParams {
 
     explicit AltChainParamsVBTC(const CBlock& genesis)
     {
-        bootstrap.hash = genesis.GetHash().asVector();
+        auto hash = genesis.GetHash().asVector();
+        bootstrap.hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
         // intentionally leave prevHash empty
         bootstrap.height = 0;
         bootstrap.timestamp = genesis.GetBlockTime();
@@ -108,8 +109,10 @@ struct AltChainParamsVBTCDetRegTest : public AltChainParamsVBTC {
 
     AltChainParamsVBTCDetRegTest()
     {
-        bootstrap.hash = uint256S("393e1fea789a3ac750921d6d9f6aa7e84df9e031ecd63fca22dc3adc0632025c").asVector();
-        bootstrap.previousBlock = uint256S("42b16a400669ab1403410585e793cec350baa53ff3fddc2414be92f03f1b12f2").asVector();
+        auto hash = uint256S("393e1fea789a3ac750921d6d9f6aa7e84df9e031ecd63fca22dc3adc0632025c").asVector();
+        bootstrap.hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
+        hash = uint256S("42b16a400669ab1403410585e793cec350baa53ff3fddc2414be92f03f1b12f2").asVector();
+        bootstrap.previousBlock = std::vector<uint8_t>(hash.rbegin(), hash.rend());
         bootstrap.height = 1000;
         // intentionally leave timestamp empty
     }

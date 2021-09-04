@@ -44,7 +44,7 @@ inline CBlockHeader headerFromBytes(const std::vector<uint8_t>& v)
     CDataStream stream(v, SER_NETWORK, PROTOCOL_VERSION);
     CBlockHeader header;
     stream >> header;
-    if(!stream.eof()) {
+    if (!stream.eof()) {
         throw std::runtime_error("stream is not empty");
     }
     return header;
@@ -55,8 +55,11 @@ inline altintegration::AltBlock blockToAltBlock(int nHeight, const CBlockHeader&
     altintegration::AltBlock alt;
     alt.height = nHeight;
     alt.timestamp = block.nTime;
-    alt.previousBlock = block.hashPrevBlock.asVector();
-    alt.hash = block.GetHash().asVector();
+    auto hash = block.hashPrevBlock.asVector();
+    std::vector<uint8_t>(hash.rbegin(), hash.rend());
+    alt.previousBlock = std::vector<uint8_t>(hash.rbegin(), hash.rend());
+    hash = block.GetHash().asVector();
+    alt.hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
     return alt;
 }
 
