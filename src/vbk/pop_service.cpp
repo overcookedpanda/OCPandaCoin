@@ -107,7 +107,7 @@ bool addAllBlockPayloads(const CBlock& block, BlockValidationState& state) EXCLU
     altintegration::ValidationState instate;
 
     if (!GetPop().check(block.popData, instate)) {
-        return error("[%s] block %s is not accepted because popData is invalid: %s", __func__, block.GetHash().ToString(),
+        return error("[%s] block %s is not accepted because popData is invalid: %s", __func__, hash.ToString(),
             instate.toString());
     }
 
