@@ -107,6 +107,14 @@ public:
     std::vector<uint8_t> asVector() const {
         return std::vector<uint8_t>{begin(), end()};
     }
+
+    base_blob getReversed() const {
+        auto res = base_blob{};
+        for(size_t i = WIDTH - 1; i != 0; i-- ) {
+            res.data[i] = data[i];
+        }
+        return res;
+    }
 };
 
 /** 160-bit opaque blob.

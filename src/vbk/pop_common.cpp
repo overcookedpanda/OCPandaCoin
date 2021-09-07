@@ -44,8 +44,7 @@ std::string toPrettyString(const altintegration::PopContext& pop)
 
 altintegration::BlockIndex<altintegration::AltBlock>* GetAltBlockIndex(const uint256& hash)
 {
-    auto vec = hash.asVector();
-    return GetPop().getAltBlockTree().getBlockIndex(std::vector<uint8_t>(vec.rbegin(), vec.rend()));
+    return GetPop().getAltBlockTree().getBlockIndex(hash.getReversed().asVector());
 }
 
 altintegration::BlockIndex<altintegration::AltBlock>* GetAltBlockIndex(const CBlockIndex* index)

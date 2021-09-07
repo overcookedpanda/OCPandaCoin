@@ -55,11 +55,8 @@ inline altintegration::AltBlock blockToAltBlock(int nHeight, const CBlockHeader&
     altintegration::AltBlock alt;
     alt.height = nHeight;
     alt.timestamp = block.nTime;
-    auto hash = block.hashPrevBlock.asVector();
-    std::vector<uint8_t>(hash.rbegin(), hash.rend());
-    alt.previousBlock = std::vector<uint8_t>(hash.rbegin(), hash.rend());
-    hash = block.GetHash().asVector();
-    alt.hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
+    alt.previousBlock = block.hashPrevBlock.getReversed().asVector();
+    alt.hash = block.GetHash().getReversed().asVector();
     return alt;
 }
 

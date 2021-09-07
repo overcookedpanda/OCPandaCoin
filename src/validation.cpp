@@ -1396,10 +1396,9 @@ void CChainState::InvalidBlockFound(CBlockIndex* pindex, const BlockValidationSt
         pindex->nStatus |= BLOCK_FAILED_VALID;
 
         if (VeriBlock::isPopEnabled()) {
-            auto hash = pindex->GetBlockHash().asVector();
             VeriBlock::GetPop()
                     .getAltBlockTree()
-                    .invalidateSubtree(std::vector<uint8_t>(hash.rbegin(), hash.rend()), altintegration::BLOCK_FAILED_BLOCK);
+                    .invalidateSubtree(pindex->GetBlockHash().getReversed().asVector() , altintegration::BLOCK_FAILED_BLOCK);
         }
 
         m_blockman.m_failed_blocks.insert(pindex);
@@ -3193,8 +3192,7 @@ void CChainState::ResetBlockFailureFlags(CBlockIndex* pindex)
     int nHeight = pindex->nHeight;
 
     if (VeriBlock::isPopEnabled()) {
-        auto blockHash = pindex->GetBlockHash().asVector();
-        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(std::vector<uint8_t>(blockHash.rbegin(), blockHash.rend()), altintegration::BLOCK_FAILED_BLOCK, false);
+        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(pindex->GetBlockHash().getReversed().asVector(), altintegration::BLOCK_FAILED_BLOCK, false);
     }
 
     // Remove the invalidity flag from this block and all its descendants.

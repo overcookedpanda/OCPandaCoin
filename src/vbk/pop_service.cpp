@@ -111,9 +111,7 @@ bool addAllBlockPayloads(const CBlock& block, BlockValidationState& state) EXCLU
             instate.toString());
     }
 
-    auto rev_hash = block.GetHash().asVector();
-    rev_hash = std::vector<uint8_t>(rev_hash.rbegin(), rev_hash.rend());
-    GetPop().getAltBlockTree().acceptBlock(rev_hash, block.popData);
+    GetPop().getAltBlockTree().acceptBlock(hash.getReversed().asVector(), block.popData);
 
     return true;
 }
@@ -121,9 +119,7 @@ bool addAllBlockPayloads(const CBlock& block, BlockValidationState& state) EXCLU
 bool setState(const uint256& block, altintegration::ValidationState& state) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
 {
     AssertLockHeld(cs_main);
-    auto hash = block.asVector();
-    hash = std::vector<uint8_t>(hash.rbegin(), hash.rend());
-    return GetPop().getAltBlockTree().setState(hash, state);
+    return GetPop().getAltBlockTree().setState(block.getReversed().asVector(), state);
 }
 
 altintegration::PopData generatePopData() EXCLUSIVE_LOCKS_REQUIRED(cs_main)
@@ -152,8 +148,7 @@ PoPRewards getPopRewards(const CBlockIndex& pindexPrev, const CChainParams& para
     }
 
     altintegration::ValidationState state;
-    auto prevHash = pindexPrev.GetBlockHash().asVector();
-    prevHash = std::vector<uint8_t>(prevHash.rbegin(), prevHash.rend());
+    auto prevHash = pindexPrev.GetBlockHash().getReversed().asVector();
     bool ret = pop.getAltBlockTree().setState(prevHash, state);
     VBK_ASSERT_MSG(ret, "error: %s", state.toString());
 
