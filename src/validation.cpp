@@ -1396,9 +1396,10 @@ void CChainState::InvalidBlockFound(CBlockIndex* pindex, const BlockValidationSt
         pindex->nStatus |= BLOCK_FAILED_VALID;
 
         if (VeriBlock::isPopEnabled()) {
+            auto hash = pindex->GetBlockHash().asVector();
             VeriBlock::GetPop()
                     .getAltBlockTree()
-                    .invalidateSubtree(pindex->GetBlockHash().asVector(), altintegration::BLOCK_FAILED_BLOCK);
+                    .invalidateSubtree(std::vector<uint8_t>(hash.rbegin(), hash.rend()), altintegration::BLOCK_FAILED_BLOCK);
         }
 
         m_blockman.m_failed_blocks.insert(pindex);
@@ -3193,7 +3194,7 @@ void CChainState::ResetBlockFailureFlags(CBlockIndex* pindex)
 
     if (VeriBlock::isPopEnabled()) {
         auto blockHash = pindex->GetBlockHash().asVector();
-        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(blockHash, altintegration::BLOCK_FAILED_BLOCK, false);
+        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(std::vector<uint8_t>(blockHash.rbegin(), blockHash.rend()), altintegration::BLOCK_FAILED_BLOCK, false);
     }
 
     // Remove the invalidity flag from this block and all its descendants.
@@ -3978,18 +3979,18 @@ bool TestBlockValidity(BlockValidationState& state, const CChainParams& chainpar
 
     bool shouldRemove = false;
 
+    auto containing = VeriBlock::blockToAltBlock(indexDummy);
     if (VeriBlock::isPopEnabled()) {
         // VeriBlock: Block that have been passed to TestBlockValidity may not exist in alt tree, because technically it was not created ("mined").
         // in this case, add it and then remove
         if (!VeriBlock::GetAltBlockIndex(block_hash)) {
             shouldRemove = true;
-            auto containing = VeriBlock::blockToAltBlock(indexDummy);
             altintegration::ValidationState _state;
             auto& tree = VeriBlock::GetPop().getAltBlockTree();
             bool ret = tree.acceptBlockHeader(containing, _state);
             assert(ret && "alt tree can not accept alt block");
 
-            tree.acceptBlock(block_hash.asVector(), block.popData);
+            tree.acceptBlock(containing.getHash(), block.popData);
         }
     }
 
@@ -4000,8 +4001,7 @@ bool TestBlockValidity(BlockValidationState& state, const CChainParams& chainpar
     if (VeriBlock::isPopEnabled()) {
         if (shouldRemove) {
             auto& tree = VeriBlock::GetPop().getAltBlockTree();
-            auto _hash = block_hash.asVector();
-            tree.removeSubtree(_hash);
+            tree.removeSubtree(containing.getHash());
         }
     }
 

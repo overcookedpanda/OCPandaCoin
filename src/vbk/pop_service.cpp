@@ -111,7 +111,9 @@ bool addAllBlockPayloads(const CBlock& block, BlockValidationState& state) EXCLU
             instate.toString());
     }
 
-    GetPop().getAltBlockTree().acceptBlock(block.GetHash().asVector(), block.popData);
+    auto rev_hash = block.GetHash().asVector();
+    rev_hash = std::vector<uint8_t>(rev_hash.rbegin(), rev_hash.rend());
+    GetPop().getAltBlockTree().acceptBlock(rev_hash, block.popData);
 
     return true;
 }
