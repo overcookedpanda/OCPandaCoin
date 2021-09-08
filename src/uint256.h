@@ -110,8 +110,8 @@ public:
 
     base_blob getReversed() const {
         auto res = base_blob{};
-        for(size_t i = WIDTH - 1; i != 0; i-- ) {
-            res.data[i] = data[i];
+        for(size_t i = 0; i < WIDTH; i++ ) {
+            res.data[i] = data[WIDTH - 1 - i];
         }
         return res;
     }
