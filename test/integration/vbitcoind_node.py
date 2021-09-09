@@ -147,9 +147,10 @@ class VBitcoindNode(Node):
                 time.sleep(tip_time - current_time)
 
     def getbestblockhash(self) -> Hexstr:
-        return self.rpc.getbestblockhash()
+        return bytes.fromhex(self.rpc.getbestblockhash())[::-1].hex()
 
     def getblock(self, hash: Hexstr) -> BlockWithPopData:
+        hash = bytes.fromhex(hash)[::-1].hex()
         s = self.rpc.getblock(hash)
         return BlockWithPopData(
             hash=s['hash'],
@@ -167,12 +168,13 @@ class VBitcoindNode(Node):
         return self.rpc.getblockcount()
 
     def getblockhash(self, height: int) -> Hexstr:
-        return self.rpc.getblockhash(height)
+        return bytes.fromhex(self.rpc.getblockhash(height))[::-1].hex()
 
     def getbtcbestblockhash(self) -> Hexstr:
-        return self.rpc.getbtcbestblockhash()
+        return bytes.fromhex(self.rpc.getbtcbestblockhash())[::-1].hex()
 
     def getpopdatabyhash(self, hash: Hexstr) -> GetpopdataResponse:
+        hash = bytes.fromhex(hash)[::-1].hex()
         s = self.rpc.getpopdatabyhash(hash)
         return GetpopdataResponse(
             header=s['block_header'],
