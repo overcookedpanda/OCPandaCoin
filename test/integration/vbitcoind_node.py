@@ -153,9 +153,9 @@ class VBitcoindNode(Node):
         hash = bytes.fromhex(hash)[::-1].hex()
         s = self.rpc.getblock(hash)
         return BlockWithPopData(
-            hash=s['hash'],
+            hash=bytes.fromhex(s['hash'])[::-1].hex(),
             height=s['height'],
-            prevhash=s.get('previousblockhash', ''),
+            prevhash=bytes.fromhex(s['previousblockhash'])[::-1].hex() if s.get('previousblockhash') != None else '',
             confirmations=s['confirmations'],
             endorsedBy=s['pop']['state']['endorsedBy'] if s['pop']['state'] else [],
             blockOfProofEndorsements=[],
@@ -168,7 +168,7 @@ class VBitcoindNode(Node):
         return self.rpc.getblockcount()
 
     def getblockhash(self, height: int) -> Hexstr:
-        return self.rpc.getblockhash(height)
+        return bytes.fromhex(self.rpc.getblockhash(height))[::-1].hex()
 
     def getbtcbestblockhash(self) -> Hexstr:
         return self.rpc.getbtcbestblockhash()
