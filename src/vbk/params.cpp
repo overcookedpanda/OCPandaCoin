@@ -45,7 +45,7 @@ bool AltChainParamsVBTC::checkBlockHeader(const std::vector<uint8_t>& bytes, con
 std::vector<uint8_t> AltChainParamsVBTC::getHash(const std::vector<uint8_t>& bytes) const noexcept
 {
     try {
-        return VeriBlock::headerFromBytes(bytes).GetHash().getReversed().asVector();
+        return VeriBlock::headerFromBytes(bytes).GetHash().getReversed();
     } catch (...) {
         // return empty hash, since we can't deserialize header
         return {};

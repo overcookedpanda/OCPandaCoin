@@ -108,10 +108,10 @@ public:
         return std::vector<uint8_t>{begin(), end()};
     }
 
-    base_blob getReversed() const {
-        auto res = base_blob{};
+    std::vector<uint8_t> getReversed() const {
+        std::vector<uint8_t> res(WIDTH, 0);
         for(size_t i = 0; i < WIDTH; i++ ) {
-            res.data[i] = data[WIDTH - 1 - i];
+            res[i] = data[WIDTH - 1 - i];
         }
         return res;
     }

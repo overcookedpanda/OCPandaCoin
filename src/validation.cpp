@@ -1398,7 +1398,7 @@ void CChainState::InvalidBlockFound(CBlockIndex* pindex, const BlockValidationSt
         if (VeriBlock::isCrossedBootstrapBlock()) {
             VeriBlock::GetPop()
                     .getAltBlockTree()
-                    .invalidateSubtree(pindex->GetBlockHash().getReversed().asVector() , altintegration::BLOCK_FAILED_BLOCK);
+                    .invalidateSubtree(pindex->GetBlockHash().getReversed() , altintegration::BLOCK_FAILED_BLOCK);
         }
 
         m_blockman.m_failed_blocks.insert(pindex);
@@ -3192,7 +3192,7 @@ void CChainState::ResetBlockFailureFlags(CBlockIndex* pindex)
     int nHeight = pindex->nHeight;
 
     if (VeriBlock::isCrossedBootstrapBlock()) {
-        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(pindex->GetBlockHash().getReversed().asVector(), altintegration::BLOCK_FAILED_BLOCK, false);
+        VeriBlock::GetPop().getAltBlockTree().revalidateSubtree(pindex->GetBlockHash().getReversed(), altintegration::BLOCK_FAILED_BLOCK, false);
     }
 
     // Remove the invalidity flag from this block and all its descendants.

@@ -147,15 +147,14 @@ class VBitcoindNode(Node):
                 time.sleep(tip_time - current_time)
 
     def getbestblockhash(self) -> Hexstr:
-        return bytes.fromhex(self.rpc.getbestblockhash())[::-1].hex()
+        return self.rpc.getbestblockhash()
 
     def getblock(self, hash: Hexstr) -> BlockWithPopData:
-        hash = bytes.fromhex(hash)[::-1].hex()
         s = self.rpc.getblock(hash)
         return BlockWithPopData(
-            hash=bytes.fromhex(s['hash'])[::-1].hex(),
+            hash=s['hash'],
             height=s['height'],
-            prevhash=bytes.fromhex(s['previousblockhash'])[::-1].hex() if s.get('previousblockhash') != None else '',
+            prevhash=s.get('previousblockhash', ''),
             confirmations=s['confirmations'],
             endorsedBy=s['pop']['state']['endorsedBy'] if s['pop']['state'] else [],
             blockOfProofEndorsements=[],
@@ -168,7 +167,7 @@ class VBitcoindNode(Node):
         return self.rpc.getblockcount()
 
     def getblockhash(self, height: int) -> Hexstr:
-        return bytes.fromhex(self.rpc.getblockhash(height))[::-1].hex()
+        return self.rpc.getblockhash(height)
 
     def getbtcbestblockhash(self) -> Hexstr:
         return self.rpc.getbtcbestblockhash()
@@ -194,8 +193,8 @@ class VBitcoindNode(Node):
     def getpopparams(self) -> PopParamsResponse:
         s = self.rpc.getpopparams()
         bootstrap = GenericBlock(
-            hash=s['bootstrapBlock']['hash'],
-            prevhash=s['bootstrapBlock']['previousBlock'],
+            hash=bytes.fromhex(s['bootstrapBlock']['hash'])[::-1].hex(),
+            prevhash=bytes.fromhex(s['bootstrapBlock']['previousBlock'])[::-1].hex(),
             height=s['bootstrapBlock']['height']
         )
 

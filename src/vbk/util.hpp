@@ -55,8 +55,8 @@ inline altintegration::AltBlock blockToAltBlock(int nHeight, const CBlockHeader&
     altintegration::AltBlock alt;
     alt.height = nHeight;
     alt.timestamp = block.nTime;
-    alt.previousBlock = block.hashPrevBlock.getReversed().asVector();
-    alt.hash = block.GetHash().getReversed().asVector();
+    alt.previousBlock = block.hashPrevBlock.getReversed();
+    alt.hash = block.GetHash().getReversed();
     return alt;
 }
 
