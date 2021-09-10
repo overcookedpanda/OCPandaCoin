@@ -105,10 +105,11 @@ CMainParams::CMainParams()
     m_assumed_blockchain_size = 1;
     m_assumed_chain_state_size = 1;
 
+    // TODO: GB has to be regenerated with sha256T
     genesis = CreateGenesisBlockDefault(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-    assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+//    assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
+//    assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
     // VeriBlock
     consensus.VeriBlockPopSecurityHeight = 200;
@@ -173,7 +174,7 @@ CMainParams::CMainParams()
      consensus.SegwitHeight = 1;         // 00000000002b980fcd729daaa248fd9316a5200e9b367f4ff2c42453e84201ca
      consensus.powLimit = uint256S("000007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
      consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
-     consensus.nPowTargetSpacing = 2 * 60;
+     consensus.nPowTargetSpacing = 2 * 60; // 2 min
      consensus.fPowAllowMinDifficultyBlocks = true;
      consensus.fPowNoRetargeting = false;
      consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
@@ -195,18 +196,10 @@ CMainParams::CMainParams()
      m_assumed_blockchain_size = 1;
      m_assumed_chain_state_size = 1;
 
-//     CBlock(hash=0000000fa9a9736fd815daea197d2cf0526e1c4641c365a5e5c811374795fdb6, ver=0x00000001, hashPrevBlock=0000000000000000000000000000000000000000000000000000000000000000, hashMerkleRoot=345a907c247b9500ecb312e5c2b027b0ec3c6bd70ebd428044eadb9f78460046, nTime=1340, nBits=1d1fffff, nNonce=15922192, vtx=1)
-//     CTransaction(hash=345a907c24, ver=1, vin.size=1, vout.size=1, nLockTime=0)
-//     CTxIn(COutPoint(0000000000, 4294967295), coinbase 04ffff1f1d01040956657269426c6f636b)
-//     CScriptWitness()
-//     CTxOut(nValue=50.00000000, scriptPubKey=41047c62bbf7f5aa4dd5c16bad99ac)
-     genesis = VeriBlock::CreateGenesisBlock(
-         1340, 15922192, 0x1d1fffff, 1, 50 * COIN,
-         "047c62bbf7f5aa4dd5c16bad99ac621b857fac4e93de86e45f5ada73404eeb44dedcf377b03c14a24e9d51605d9dd2d8ddaef58760d9c4bb82d9c8f06d96e79488",
-         "VeriBlock");
+     genesis = VeriBlock::CreateGenesisBlock(1631200000, 99342174, 0x1d0fffff, 1, "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4104ffff0f1d01043956657269426c6f636b20426974636f696e205265666572656e636520496d706c656d656e746174696f6e2c20536570742031332c2032303231ffffffff010065cd1d000000001600143dd5f2f667315cc98e669deb88d3dfe831aa2cea00000000");
      consensus.hashGenesisBlock = genesis.GetHash();
-     assert(consensus.hashGenesisBlock == uint256S("0000000fa9a9736fd815daea197d2cf0526e1c4641c365a5e5c811374795fdb6"));
-     assert(genesis.hashMerkleRoot == uint256S("345a907c247b9500ecb312e5c2b027b0ec3c6bd70ebd428044eadb9f78460046"));
+     assert(consensus.hashGenesisBlock == uint256S("0x000000018b2116bf56a7367978e2778a357cc3c64bbed4ca3fb67bd04aa57afd"));
+     assert(genesis.hashMerkleRoot == uint256S("0x75ed6bdde3b1ff03477dd1c1d0e374cea5c543b3fbec8c564136664f6b0ebab6"));
 
      vFixedSeeds.clear();
      vSeeds.clear();
@@ -262,7 +255,7 @@ CRegTestParams::CRegTestParams(const ArgsManager& args)
     consensus.MinBIP9WarningHeight = 0;
     consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
     consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
-    consensus.nPowTargetSpacing = 10 * 60;
+    consensus.nPowTargetSpacing = 2 * 60; // 2 min
     consensus.fPowAllowMinDifficultyBlocks = true;
     consensus.fPowNoRetargeting = true;
     consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
@@ -285,10 +278,10 @@ CRegTestParams::CRegTestParams(const ArgsManager& args)
 
     UpdateActivationParametersFromArgs(args);
 
-    genesis = CreateGenesisBlockDefault(1296688602, 2, 0x207fffff, 1, 50 * COIN);
+    genesis = VeriBlock::CreateGenesisBlock(1631200000, 0, 0x207fffff, 1, "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4104ffff7f2001043956657269426c6f636b20426974636f696e205265666572656e636520496d706c656d656e746174696f6e2c20536570742031332c2032303231ffffffff010065cd1d000000001600143dd5f2f667315cc98e669deb88d3dfe831aa2cea00000000");
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
-    assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+    assert(consensus.hashGenesisBlock == uint256S("0x04c5032738aab79289f64765b73577129208a60e57e1036a1ced084eae97e623"));
+    assert(genesis.hashMerkleRoot == uint256S("0x163fda4b7228e3b74b24852326e0036d30725a21eb81dfc5c12d6e16793d3b40"));
 
     vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
     vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -418,10 +411,10 @@ CDetRegTestParams::CDetRegTestParams(const ArgsManager& args)
 
     UpdateActivationParametersFromArgs(args);
 
-    genesis = CreateGenesisBlockDefault(1296688602, 2, 0x207fffff, 1, 50 * COIN);
+    genesis = VeriBlock::CreateGenesisBlock(1631200000, 0, 0x207fffff, 1, "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff4104ffff7f2001043956657269426c6f636b20426974636f696e205265666572656e636520496d706c656d656e746174696f6e2c20536570742031332c2032303231ffffffff010065cd1d000000001600143dd5f2f667315cc98e669deb88d3dfe831aa2cea00000000");
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
-    assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+    assert(consensus.hashGenesisBlock == uint256S("0x04c5032738aab79289f64765b73577129208a60e57e1036a1ced084eae97e623"));
+    assert(genesis.hashMerkleRoot == uint256S("0x163fda4b7228e3b74b24852326e0036d30725a21eb81dfc5c12d6e16793d3b40"));
 
     vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
     vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.

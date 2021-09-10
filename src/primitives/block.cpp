@@ -10,7 +10,9 @@
 
 uint256 CBlockHeader::GetHash() const
 {
-    return SerializeHash(*this);
+    auto sha256d = SerializeHash(*this);
+    // add third iteration
+    return Sha256Hash(sha256d.begin(), sha256d.end());
 }
 
 std::string CBlock::ToString() const

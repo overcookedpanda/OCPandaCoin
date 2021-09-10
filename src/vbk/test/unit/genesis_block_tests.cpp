@@ -33,70 +33,39 @@ struct GenesisBlockFixture {
         }
     }
     std::string initialPubkey = "047c62bbf7f5aa4dd5c16bad99ac621b857fac4e93de86e45f5ada73404eeb44dedcf377b03c14a24e9d51605d9dd2d8ddaef58760d9c4bb82d9c8f06d96e79488";
-    std::string pszTimestamp = "VeriBlock";
+    std::string pszTimestamp = "VeriBlock Bitcoin Reference Implementation, Sept 13, 2021";
 };
-
-BOOST_FIXTURE_TEST_CASE(main, GenesisBlockFixture)
-{
-//        // Do the actual block mining
-//        {
-//            init("main");
 //
-//            CBlock block = VeriBlock::MineGenesisBlock(
-//                1337,
-//                pszTimestamp,
-//                initialPubkey,
-//                0x1d00ffff,
-//                1,
-//                0,
-//                50 * COIN);
+//BOOST_FIXTURE_TEST_CASE(main, GenesisBlockFixture)
+//{
+////        // Do the actual block mining
+////        {
+////            init("main");
+////
+////            CBlock block = VeriBlock::MineGenesisBlock(
+////                1337,
+////                pszTimestamp,
+////                initialPubkey,
+////                0x1d00ffff,
+////                1,
+////                0,
+////                50 * COIN);
+////
+////            printf("%s\n", block.ToString().c_str());
+////        }
 //
-//            printf("%s\n", block.ToString().c_str());
-//        }
-
-    check("main");
-}
-
+//    check("main");
+//}
+//
 BOOST_FIXTURE_TEST_CASE(test, GenesisBlockFixture)
 {
-//        // Do the actual block mining
-//        {
-//            init("test");
-//
-//            CBlock block = VeriBlock::MineGenesisBlock(
-//                1340,
-//                pszTimestamp,
-//                initialPubkey,
-//                0x1d1fffff, // 30 sec on macbook pro 2013
-//                1,
-//                0,
-//                50 * COIN);
-//
-//            printf("%s\n", block.ToString().c_str());
-//        }
-
     check("test");
 }
 
 BOOST_FIXTURE_TEST_CASE(regtest, GenesisBlockFixture)
 {
-    //    // Do the actual block mining
-    //    {
-    //        init("regtest");
-    //
-    //        CBlock block = VeriBlock::MineGenesisBlock(
-    //            1337,
-    //            pszTimestamp,
-    //            initialPubkey,
-    //            0x207fffff,
-    //            1, // version
-    //            0, // starting nonce
-    //            50 * COIN);
-    //
-    //        printf("BLOCK:\n%s\n", block.ToString().c_str());
-    //    }
-
     check("regtest");
+    check("detregtest");
 }
 
 
