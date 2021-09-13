@@ -139,7 +139,7 @@ class VBitcoindNode(Node):
         address = address or self.getnewaddress()
         for i in range(nblocks):
             self.rpc.generatetoaddress(1, address)
-            tip_hash =  self.rpc.getbestblockhash()
+            tip_hash = self.rpc.getbestblockhash()
             tip = self.rpc.getblock(tip_hash)
             tip_time = tip['time']
             current_time = int(time.time())
