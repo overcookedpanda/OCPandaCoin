@@ -4286,7 +4286,8 @@ bool BlockManager::LoadBlockIndex(
         // ALT tree tip should be set - this is our last best tip
         auto* tip = VeriBlock::GetPop().getAltBlockTree().getBestChain().tip();
         assert(tip && "we could not load tip of alt block");
-        uint256 hash(std::vector<uint8_t>{tip->getHash().rbegin(), tip->getHash().rend()});
+        uint256 revHash(tip->getHash());
+        uint256 hash(revHash.getReversed());
 
         CBlockIndex* index = LookupBlockIndex(hash);
         assert(index);
