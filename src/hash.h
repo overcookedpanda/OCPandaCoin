@@ -200,6 +200,17 @@ uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL
     return ss.GetHash();
 }
 
+/** Compute the 256-bit hash of an object. */
+template<typename T1>
+inline uint256 Sha256Hash(const T1 pbegin, const T1 pend)
+{
+    uint256 result;
+    CSHA256 c;
+    c.Write((const unsigned char*)&pbegin[0], (pend - pbegin) * sizeof(pbegin[0]))
+        .Finalize((unsigned char*)&result);
+    return result;
+}
+
 unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
 
 void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);

@@ -147,4 +147,12 @@ BOOST_AUTO_TEST_CASE(siphash)
     }
 }
 
+BOOST_AUTO_TEST_CASE(Sha256Hash_test) 
+{
+    CDataStream ss(SER_DISK, CLIENT_VERSION);
+    ss << std::vector<uint8_t>{};
+
+    BOOST_CHECK_EQUAL(Sha256Hash(ss.begin(), ss.end()), uint256{});
+}
+
 BOOST_AUTO_TEST_SUITE_END()
