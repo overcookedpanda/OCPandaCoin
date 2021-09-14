@@ -47,6 +47,7 @@ class PopParams(BitcoinTestFramework):
     def bootstrap_block_exists(self):
         param = self.node.getpopparams()
         bootstrap = param['bootstrapBlock']
+        # Library stores hashes in the reverse order, getblock() function requires hashes in the direct order
         bootstraphash = bytes.fromhex(bootstrap['hash'])[::-1].hex()
 
         try:
