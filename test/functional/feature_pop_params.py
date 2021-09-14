@@ -47,7 +47,7 @@ class PopParams(BitcoinTestFramework):
     def bootstrap_block_exists(self):
         param = self.node.getpopparams()
         bootstrap = param['bootstrapBlock']
-        bootstraphash = bootstrap['hash']
+        bootstraphash = bytes.fromhex(bootstrap['hash'])[::-1].hex()
 
         try:
             block = self.node.getblock(bootstraphash)
