@@ -256,9 +256,7 @@ class PopMiningContext:
         keystoneInterval = get_keystone_interval(node)
         self.bootstrap = BlockIndex(
             height=bootstrap['height'],
-            # TODO: put in normal order ALT-363
-            # reverse bootstrap block hash
-            hash=bytes.fromhex(bootstrap['hash'])[::-1].hex(),
+            hash=bootstrap['hash'],
             prev=""
         )
         self.blocks = {
@@ -338,12 +336,10 @@ class PopMiningContext:
 
             ks1 = self._get_ancestor(prevHash, ks1height)
             if ks1:
-                # TODO: remove hash reversal here when ALT-363 is implemented
-                c.keystone1 = bytes.fromhex(ks1.hash)[::-1].hex()
+                c.keystone1 = ks1.hash
                 ks2 = self._get_ancestor(ks1.hash, ks2height)
                 if ks2:
-                    # TODO: remove hash reversal here when ALT-363 is implemented
-                    c.keystone2 = bytes.fromhex(ks2.hash)[::-1].hex()
+                    c.keystone2 = ks2.hash
         except:
             c.height = self.bootstrap.height
 
