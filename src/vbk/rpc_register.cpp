@@ -527,10 +527,12 @@ bool GetPayload(
     containingBlocks.reserve(containing.size());
     std::transform(
         containing.begin(), containing.end(), std::back_inserter(containingBlocks), [](const decltype(*containing.begin())& blockHash) {
+            assert(blockHash.size() == uint256().size() && "unexpected containing block hash size in the payloads index");
             return uint256(blockHash);
         });
 
     for (const auto& blockHash : containing) {
+        assert(blockHash.size() == uint256().size() && "unexpected containing block hash size in the payloads index");
         auto* index = LookupBlockIndex(uint256(blockHash));
         assert(index && "state and index mismatch");
 

@@ -196,6 +196,14 @@ BOOST_FIXTURE_TEST_CASE(extractblockinfo_inavlid_test, E2eFixture)
     pubData.contextInfo = serializedContext;
 
     CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
+
+    container.keystones.firstPreviousKeystone.resize(32);
+    container.keystones.secondPreviousKeystone.resize(33);
+
+    serializedContext = altintegration::SerializeToVbkEncoding(container);
+    pubData.contextInfo = serializedContext;
+
+    CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
