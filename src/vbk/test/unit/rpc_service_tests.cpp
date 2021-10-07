@@ -195,7 +195,8 @@ BOOST_FIXTURE_TEST_CASE(extractblockinfo_inavlid_test, E2eFixture)
     auto serializedContext = altintegration::SerializeToVbkEncoding(container);
     pubData.contextInfo = serializedContext;
 
-    CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
+    auto result = CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
+    BOOST_CHECK_NE(find_value(result, "code").get_int64(), 0);
 
     container.keystones.firstPreviousKeystone.resize(32);
     container.keystones.secondPreviousKeystone.resize(33);
@@ -203,7 +204,8 @@ BOOST_FIXTURE_TEST_CASE(extractblockinfo_inavlid_test, E2eFixture)
     serializedContext = altintegration::SerializeToVbkEncoding(container);
     pubData.contextInfo = serializedContext;
 
-    CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
+    result = CallRPC(std::string("extractblockinfo [\"") + altintegration::SerializeToHex(pubData) + "\"]");
+    BOOST_CHECK_NE(find_value(result, "code").get_int64(), 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

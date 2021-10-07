@@ -774,6 +774,13 @@ UniValue extractblockinfo(const JSONRPCRequest& req)
             if (!altintegration::DeserializeFromVbkEncoding(stream, container, state)) {
                 return JSONRPCError(RPC_INVALID_PARAMETER, "can not deserialize ContextInfoContainer err: " + state.toString());
             }
+
+            if (container.keystones.firstPreviousKeystone.size() != uint256().size()) {
+                return JSONRPCError(RPC_INVALID_PARAMETER, "can not deserialize ContextInfoContainer err: unexpected firstPreviousKeystone size");
+            }
+            if (container.keystones.secondPreviousKeystone.size() != uint256().size()) {
+                return JSONRPCError(RPC_INVALID_PARAMETER, "can not deserialize ContextInfoContainer err: unexpected secondPreviousKeystone size");
+            }
         }
 
         UniValue val(UniValue::VOBJ);
