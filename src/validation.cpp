@@ -4295,13 +4295,8 @@ bool BlockManager::LoadBlockIndex(
         if (index->IsValid(BLOCK_VALID_TREE)) {
             pindexBestHeader = index;
             // clean up candidates set
-            for (auto it = block_index_candidates.begin(); it != block_index_candidates.end(); ) {
-                if(*it != pindexBestHeader) {
-                    it = block_index_candidates.erase(it);
-                } else {
-                    it++;
-                }
-            }
+            block_index_candidates.clear();
+            block_index_candidates.insert(pindexBestHeader);
         } else {
             return false;
         }
