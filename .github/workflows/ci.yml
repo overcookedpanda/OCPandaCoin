@@ -8,6 +8,7 @@ on:
       - release/*
       - mainnet
       - trunk/*
+      - skipping-blocks-testnet
 
   pull_request:
     branches:

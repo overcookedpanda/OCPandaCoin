@@ -8,6 +8,7 @@ on:
       - release/*
       - mainnet
       - test_deploy
+      - skipping-blocks-testnet
 
   pull_request:
     branches:
