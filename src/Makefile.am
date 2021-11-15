@@ -298,6 +298,9 @@ libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
   vbk/pop_service.hpp \
   vbk/pop_service.cpp \
+  vbk/params.cpp \
+  vbk/pop_common.hpp \
+  vbk/pop_common.cpp \
   addrdb.cpp \
   addrman.cpp \
   banman.cpp \
@@ -492,9 +495,6 @@ libbitcoin_consensus_a_SOURCES = \
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
-  vbk/pop_common.hpp \
-  vbk/pop_common.cpp \
-  vbk/params.cpp \
   vbk/bootstraps-testnet.cpp \
   vbk/bootstraps-mainnet.cpp \
   pow_common.cpp \
@@ -649,13 +649,17 @@ endif
 btcsq_tx_LDADD = \
   $(VERIBLOCK_POP_CPP_LIBS) \
   $(LIBUNIVALUE) \
+  $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
+  $(LIBLEVELDB) \
+  $(LIBLEVELDB_SSE42) \
+  $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-btcsq_tx_LDADD += $(BOOST_LIBS) $(VERIBLOCK_POP_CPP_LIBS)
+btcsq_tx_LDADD += $(BOOST_LIBS) $(VERIBLOCK_POP_CPP_LIBS) $(MINIUPNPC_LIBS)
 
 # btcsq-wallet binary #
 btcsq_wallet_SOURCES = bitcoin-wallet.cpp
@@ -670,6 +674,7 @@ endif
 btcsq_wallet_LDADD = \
   $(LIBBITCOIN_WALLET_TOOL) \
   $(LIBBITCOIN_WALLET) \
+  $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_UTIL) \

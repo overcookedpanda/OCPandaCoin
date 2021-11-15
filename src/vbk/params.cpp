@@ -10,6 +10,7 @@
 #include <pow.h>
 #include <util/strencodings.h>
 #include <util/system.h>
+#include <validation.h>
 #include <vbk/bootstraps.h>
 #include <vbk/pop_common.hpp>
 #include <veriblock/pop.hpp>
@@ -50,6 +51,20 @@ std::vector<uint8_t> AltChainParamsBTCSQ::getHash(const std::vector<uint8_t>& by
         // return empty hash, since we can't deserialize header
         return {};
     }
+}
+
+bool AltChainParamsBTCSQ::isAncestor(const altintegration::AltBlock::hash_t& descendant_hash, const altintegration::AltBlock::hash_t& ancestor_hash) const noexcept
+{
+    AssertLockHeld(cs_main);
+
+    if (descendant_hash == ancestor_hash) {
+        return false;
+    }
+
+    auto* descendant = LookupBlockIndex(uint256(descendant_hash));
+    auto* ancestor = LookupBlockIndex(uint256(ancestor_hash));
+
+    return descendant->GetAncestor(ancestor->nHeight) == ancestor;
 }
 
 static std::vector<std::string> parseBlocks(const std::string& s)

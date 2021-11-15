@@ -30,7 +30,8 @@ namespace VeriBlock {
 static uint64_t popScoreComparisons = 0ULL;
 
 template <typename T>
-void onAcceptedToMempool(const T& t) {
+void onAcceptedToMempool(const T& t)
+{
     assert(g_rpc_node);
     assert(g_rpc_node->connman);
     p2p::RelayPopPayload(g_rpc_node->connman.get(), t);

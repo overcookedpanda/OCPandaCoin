@@ -86,6 +86,8 @@ struct AltChainParamsBTCSQ : public altintegration::AltChainParams {
 
     std::vector<uint8_t> getHash(const std::vector<uint8_t>& bytes) const noexcept override;
 
+    bool isAncestor(const altintegration::AltBlock::hash_t& descendant_hash, const altintegration::AltBlock::hash_t& ancestor_hash) const noexcept override;
+
     // we should verify:
     // - check that 'bytes' can be deserialized to a CBlockHeader
     // - check that this CBlockHeader is valid (time, pow, version...)
