@@ -64,6 +64,10 @@ bool AltChainParamsBTCSQ::isAncestor(const altintegration::AltBlock::hash_t& des
     auto* descendant = LookupBlockIndex(uint256(descendant_hash));
     auto* ancestor = LookupBlockIndex(uint256(ancestor_hash));
 
+    if (ancestor == nullptr || descendant == nullptr) {
+        return false;
+    }
+
     return descendant->GetAncestor(ancestor->nHeight) == ancestor;
 }
 
