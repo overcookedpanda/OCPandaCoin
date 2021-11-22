@@ -71,7 +71,7 @@ void RPCNestedTests::rpcNestedTests()
     QVERIFY(result == result2);
 
     RPCConsole::RPCExecuteCommandLine(*node, result, "getblock(getbestblockhash())[tx][0]", &filtered);
-    QVERIFY(result == "2e29d285f392c56f852918cda0c46137b42060007c7db43cff2879547e3c384f"); //this txid should be the first transaction within the genesis block
+    QVERIFY(result == "0x18b4b9b2e8628d0b87cf4a9219a153f3caf0f55f6efa0fd010b2cbd725a8faca"); //this txid should be the first transaction within the genesis block
     QVERIFY(filtered == "getblock(getbestblockhash())[tx][0]");
 
     RPCConsole::RPCParseCommandLine(nullptr, result, "importprivkey", false, &filtered);
