@@ -9,12 +9,14 @@ on:
       - feature/*
 
 
+
   pull_request:
     branches:
       - master
       - develop
       - release/*
       - feature/*
+
 
 
 
