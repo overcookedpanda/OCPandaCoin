@@ -15,8 +15,8 @@ PORT_MAX = 25000
 BIND_TO = '127.0.0.1'
 
 
-def _write_btcsq_conf(datadir, p2p_port, rpc_port, rpc_user, rpc_password):
-    bitcoin_conf_file = Path(datadir, "btcsq.conf")
+def _write_ocpandacoin_conf(datadir, p2p_port, rpc_port, rpc_user, rpc_password):
+    bitcoin_conf_file = Path(datadir, "ocpandacoin.conf")
     with open(bitcoin_conf_file, 'w', encoding='utf8') as f:
         f.write("regtest=1\n")
         f.write("[{}]\n".format("regtest"))
@@ -38,7 +38,7 @@ def _write_btcsq_conf(datadir, p2p_port, rpc_port, rpc_user, rpc_password):
         f.write("poplogverbosity=info\n")
 
 
-class BTCSQdNode(Node):
+class OCPandaCoindNode(Node):
     def __init__(self, number: int, datadir: Path):
         self.number = number
 
@@ -51,13 +51,13 @@ class BTCSQdNode(Node):
         rpc_password = 'testpassword'
         self.rpc = JsonRpcApi(rpc_url, user=rpc_user, password=rpc_password)
 
-        btcsqd_path = os.environ.get('BTCSQD_PATH')
-        if btcsqd_path == None:
-            raise Exception("BTCSQD_PATH env var is not set. Set up the path to the btcsqd binary to the BTCSQD_PATH env var")
+        ocpandacoind_path = os.environ.get('OCPANDACOIN_PATH')
+        if ocpandacoind_path == None:
+            raise Exception("OCPANDACOIN_PATH env var is not set. Set up the path to the ocpandacoind binary to the OCPANDACOIN_PATH env var")
 
-        exe = Path(Path.cwd(), btcsqd_path)
+        exe = Path(Path.cwd(), ocpandacoind_path)
         if not exe:
-            raise Exception("BTCSQNode: btcsqd is not found in PATH")
+            raise Exception("OCPandaCoinNode: ocpandacoind is not found in PATH")
 
         assert_dir_accessible(datadir)
         args = [
@@ -73,7 +73,7 @@ class BTCSQdNode(Node):
         ]
         self.manager = ProcessManager(args, datadir)
 
-        _write_btcsq_conf(datadir, p2p_port, rpc_port, rpc_user, rpc_password)
+        _write_ocpandacoin_conf(datadir, p2p_port, rpc_port, rpc_user, rpc_password)
 
     def start(self) -> None:
         self.manager.start()

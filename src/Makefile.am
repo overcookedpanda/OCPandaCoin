@@ -86,18 +86,18 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += btcsqd
+  bin_PROGRAMS += ocpandacoind
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += btcsq-cli
+  bin_PROGRAMS += ocpandacoin-cli
 endif
 if BUILD_BITCOIN_TX
-  bin_PROGRAMS += btcsq-tx
+  bin_PROGRAMS += ocpandacoin-tx
 endif
 if ENABLE_WALLET
 if BUILD_BITCOIN_WALLET
-  bin_PROGRAMS += btcsq-wallet
+  bin_PROGRAMS += ocpandacoin-wallet
 endif
 endif
 
@@ -289,7 +289,7 @@ obj/build.h: FORCE
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
 
-# server: shared between btcsqd and btcsq-qt
+# server: shared between ocpandacoind and ocpandacoin-qt
 # Contains code accessing mempool and chain state that is meant to be separated
 # from wallet and gui code (see node/README.md). Shared code should go in
 # libbitcoin_common or libbitcoin_util libraries, instead.
@@ -371,7 +371,7 @@ libbitcoin_zmq_a_SOURCES = \
 endif
 
 
-# wallet: shared between btcsqd and btcsq-qt, but only linked
+# wallet: shared between ocpandacoind and ocpandacoin-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -488,7 +488,7 @@ libbitcoin_consensus_a_SOURCES = \
   util/strencodings.h \
   version.h
 
-# common: shared between btcsqd, and btcsq-qt and non-server tools
+# common: shared between ocpandacoind, and ocpandacoin-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
@@ -588,19 +588,19 @@ libbitcoin_cli_a_SOURCES = \
 nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# btcsqd binary #
-btcsqd_SOURCES = bitcoind.cpp
-btcsqd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-btcsqd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-btcsqd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# ocpandacoind binary #
+ocpandacoind_SOURCES = bitcoind.cpp
+ocpandacoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+ocpandacoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+ocpandacoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-btcsqd_SOURCES += bitcoind-res.rc
+ocpandacoind_SOURCES += bitcoind-res.rc
 endif
 
 # Libraries below may be listed more than once to resolve circular dependencies (see
 # https://eli.thegreenplace.net/2013/07/09/library-order-in-static-linking#circular-dependency)
-btcsqd_LDADD = \
+ocpandacoind_LDADD = \
   $(VERIBLOCK_POP_CPP_LIBS) \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
@@ -615,38 +615,38 @@ btcsqd_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-btcsqd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(VERIBLOCK_POP_CPP_LIBS)
+ocpandacoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(VERIBLOCK_POP_CPP_LIBS)
 
 # bitcoin-cli binary #
-btcsq_cli_SOURCES = bitcoin-cli.cpp
-btcsq_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-btcsq_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-btcsq_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+ocpandacoin_cli_SOURCES = bitcoin-cli.cpp
+ocpandacoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+ocpandacoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+ocpandacoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-btcsq_cli_SOURCES += bitcoin-cli-res.rc
+ocpandacoin_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-btcsq_cli_LDADD = \
+ocpandacoin_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO) \
   $(VERIBLOCK_POP_CPP_LIBS)
 
-btcsq_cli_LDADD += $(BOOST_LIBS) $(EVENT_LIBS)
+ocpandacoin_cli_LDADD += $(BOOST_LIBS) $(EVENT_LIBS)
 
-# btcsq-tx binary #
-btcsq_tx_SOURCES = bitcoin-tx.cpp
-btcsq_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-btcsq_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-btcsq_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# ocpandacoin-tx binary #
+ocpandacoin_tx_SOURCES = bitcoin-tx.cpp
+ocpandacoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+ocpandacoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+ocpandacoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-btcsq_tx_SOURCES += bitcoin-tx-res.rc
+ocpandacoin_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-btcsq_tx_LDADD = \
+ocpandacoin_tx_LDADD = \
   $(VERIBLOCK_POP_CPP_LIBS) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
@@ -655,19 +655,19 @@ btcsq_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-btcsq_tx_LDADD += $(BOOST_LIBS) $(VERIBLOCK_POP_CPP_LIBS)
+ocpandacoin_tx_LDADD += $(BOOST_LIBS) $(VERIBLOCK_POP_CPP_LIBS)
 
-# btcsq-wallet binary #
-btcsq_wallet_SOURCES = bitcoin-wallet.cpp
-btcsq_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-btcsq_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-btcsq_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# ocpandacoin-wallet binary #
+ocpandacoin_wallet_SOURCES = bitcoin-wallet.cpp
+ocpandacoin_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+ocpandacoin_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+ocpandacoin_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-btcsq_wallet_SOURCES += bitcoin-wallet-res.rc
+ocpandacoin_wallet_SOURCES += bitcoin-wallet-res.rc
 endif
 
-btcsq_wallet_LDADD = \
+ocpandacoin_wallet_LDADD = \
   $(LIBBITCOIN_WALLET_TOOL) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
@@ -682,7 +682,7 @@ btcsq_wallet_LDADD = \
   $(LIBUNIVALUE) \
   $(VERIBLOCK_POP_CPP_LIBS)
 
-btcsq_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS)
+ocpandacoin_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS)
 #
 
 # bitcoinconsensus library #

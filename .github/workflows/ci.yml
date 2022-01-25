@@ -3,18 +3,19 @@ name: CI
 on:
   push:
     branches:
-      - develop
       - master
+      - develop
       - release/*
-      - mainnet
-      - trunk/*
+      - feature/*
+
 
   pull_request:
     branches:
-      - develop
       - master
+      - develop
       - release/*
-      - trunk/*
+      - feature/*
+
 
 jobs:
   linux-native:
@@ -86,33 +87,14 @@ jobs:
       - name: create artifacts
         if: success()
         run: |
-          mv ./release BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
-          tar czvf BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}/
-      - name: upload artifacts
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.ARTIFACT_HOST }}
-          username: ${{ secrets.ARTIFACT_USER }}
-          key: ${{ secrets.ARTIFACT_KEY }}
-          passphrase: ${{ secrets.ARTIFACT_KEY_PASSPHRASE }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz
-          target: ${{ secrets.ARTIFACT_PATH }}
-      - name: upload artifacts to public mirrors
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: "mirror1.veriblock.org, mirror2.veriblock.org"
-          username: ${{ secrets.MIRROR_ARTIFACTS_USER }}
-          key: ${{ secrets.MIRROR_ARTIFACTS_KEY }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz
-          target: "artifacts/btcsq"
+          mv ./release OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
+          tar czvf OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}/
       - name: Archive artifacts on GH
         if: success()
         uses: actions/upload-artifact@v2
         with:
-          name: btcsq-linux-x64
-          path: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz
+          name: ocpandacoin-linux-x64
+          path: OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz
       - name: make check
         timeout-minutes: 60
         run: make check
@@ -130,13 +112,13 @@ jobs:
         if: always()
         timeout-minutes: 60
         env:
-          BTCSQD_PATH: './src/btcsqd'
+          OCPANDACOIN_PATH: './src/ocpandacoind'
         run: python3 test/integration/test_runner.py
       # - name: run pop integration benchmark
       #   if: always()
       #   timeout-minutes: 60
       #   env:
-      #     BTCSQD_PATH: './src/btcsqd'
+      #     OCPANDACOIN_PATH: './src/ocpandacoind'
       #   run: python3 test/integration/benchmark_runner.py
 
   x86_64-w64-mingw32:
@@ -202,34 +184,14 @@ jobs:
       - name: create artifacts
         if: success()
         run: |
-          mv ./btcsq-0.19.99-win64-setup-unsigned.exe release/
-          mv ./release BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
-          zip -r9 BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
-      - name: upload artifacts
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.ARTIFACT_HOST }}
-          username: ${{ secrets.ARTIFACT_USER }}
-          key: ${{ secrets.ARTIFACT_KEY }}
-          passphrase: ${{ secrets.ARTIFACT_KEY_PASSPHRASE }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip
-          target: ${{ secrets.ARTIFACT_PATH }}
-      - name: upload artifacts to public mirrors
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: "mirror1.veriblock.org, mirror2.veriblock.org"
-          username: ${{ secrets.MIRROR_ARTIFACTS_USER }}
-          key: ${{ secrets.MIRROR_ARTIFACTS_KEY }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip
-          target: "artifacts/btcsq"
+         mv ./release OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
+          zip -r9 OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
       - name: Archive artifacts on GH
         if: success()
         uses: actions/upload-artifact@v2
         with:
-          name: btcsq-windows-x64
-          path: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip
+          name: ocpandacoin-windows-x64
+          path: OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-win64-qt.zip
 
 
   x86_64-apple-darwin16:
@@ -301,35 +263,16 @@ jobs:
       - name: create artifacts
         if: success()
         run: |
-          mv ./BTCSQ-Qt.app release/
-          mv ./BTCSQ-Core.dmg release/
-          mv ./release BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
-          zip -r9 BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
-      - name: upload artifacts
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.ARTIFACT_HOST }}
-          username: ${{ secrets.ARTIFACT_USER }}
-          key: ${{ secrets.ARTIFACT_KEY }}
-          passphrase: ${{ secrets.ARTIFACT_KEY_PASSPHRASE }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip
-          target: ${{ secrets.ARTIFACT_PATH }}
-      - name: upload artifacts to public mirrors
-        if: success()
-        uses: appleboy/scp-action@master
-        with:
-          host: "mirror1.veriblock.org, mirror2.veriblock.org"
-          username: ${{ secrets.MIRROR_ARTIFACTS_USER }}
-          key: ${{ secrets.MIRROR_ARTIFACTS_KEY }}
-          source: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip
-          target: "artifacts/btcsq"
+          mv ./OCPandaCoin-Qt.app release/
+          mv ./OCPandaCoin-Core.dmg release/
+          mv ./release OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
+          zip -r9 OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}
       - name: Archive artifacts on GH
         if: success()
         uses: actions/upload-artifact@v2
         with:
-          name: btcsq-macos-x64
-          path: BTCSQ-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip
+          name: ocpandacoin-macos-x64
+          path: OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-macos-qt.zip
 
 
   macos-native:
@@ -408,7 +351,7 @@ jobs:
         if: always()
         timeout-minutes: 60
         env:
-          BTCSQD_PATH: './src/btcsqd'
+          OCPANDACOIN_PATH: './src/ocpandacoind'
         run: python3 test/integration/test_runner.py
 
   linux-asan:
@@ -511,15 +454,15 @@ jobs:
         if: always()
         timeout-minutes: 60
         env:
-          BTCSQD_PATH: './src/btcsqd'
+          OCPANDACOIN_PATH: './src/ocpandacoind'
         run: python3 test/integration/test_runner.py
 
       - name: Create ASAN artifacts
         if: success()
         run: |
-          REL=btcsq-linux-asan-x64
+          REL=ocpandacoin-linux-asan-x64
           mkdir -p $REL
-          cp ./src/btcsq{d,-cli,-tx,-wallet} $REL
+          cp ./src/ocpandacoin{d,-cli,-tx,-wallet} $REL
           echo "ASAN_OPTIONS=detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1" >> $REL/env
           echo "LSAN_OPTIONS=suppressions=${{ github.workspace }}/test/sanitizer_suppressions/lsan" >> $REL/env
           echo "TSAN_OPTIONS=suppressions=${{ github.workspace }}/test/sanitizer_suppressions/tsan:log_path=${{ github.workspace }}/sanitizer-output/tsan" >> $REL/env
@@ -528,5 +471,5 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v2
         with:
-          name: btcsq-linux-asan-x64
-          path: btcsq-linux-asan-x64
+          name: ocpandacoin-linux-asan-x64
+          path: ocpandacoin-linux-asan-x64

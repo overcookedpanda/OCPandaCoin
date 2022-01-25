@@ -7,18 +7,18 @@ define(_CLIENT_VERSION_RC, 0)
 define(_CLIENT_VERSION_IS_RELEASE, false)
 define(_COPYRIGHT_YEAR, 2021)
 define(_COPYRIGHT_HOLDERS,[%s])
-define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Xenios SEZC]])
-AC_INIT([BTCSQ Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/VeriBlock/vbk-ri-btc/issues],[btcsq],[https://www.veriblock.org/])
+define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[["Overcooked Panda"]])
+AC_INIT([OCPandaCoin Core],m4_join([.], _CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MINOR, _CLIENT_VERSION_REVISION, m4_if(_CLIENT_VERSION_BUILD, [0], [], _CLIENT_VERSION_BUILD))m4_if(_CLIENT_VERSION_RC, [0], [], [rc]_CLIENT_VERSION_RC),[https://github.com/overcookedpanda/OCPandaCoin/issues],[ocpandacoin],[https://github.com/overcookedpanda/OCPandaCoin])
 AC_CONFIG_SRCDIR([src/validation.cpp])
 AC_CONFIG_HEADERS([src/config/bitcoin-config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 
-BITCOIN_DAEMON_NAME=btcsqd
-BITCOIN_GUI_NAME=btcsq-qt
-BITCOIN_CLI_NAME=btcsq-cli
-BITCOIN_TX_NAME=btcsq-tx
-BITCOIN_WALLET_TOOL_NAME=btcsq-wallet
+BITCOIN_DAEMON_NAME=ocpandacoind
+BITCOIN_GUI_NAME=ocpandacoin-qt
+BITCOIN_CLI_NAME=ocpandacoin-cli
+BITCOIN_TX_NAME=ocpandacoin-tx
+BITCOIN_WALLET_TOOL_NAME=ocpandacoin-wallet
 
 dnl Unless the user specified ARFLAGS, force it to be cr
 AC_ARG_VAR(ARFLAGS, [Flags for the archiver, defaults to <cr> if not set])
@@ -443,25 +443,25 @@ CPPFLAGS="$CPPFLAGS -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS"
 
 AC_ARG_WITH([utils],
   [AS_HELP_STRING([--with-utils],
-  [build btcsq-cli btcsq-tx btcsq-wallet (default=yes)])],
+  [build ocpandacoin-cli ocpandacoin-tx ocpandacoin-wallet (default=yes)])],
   [build_bitcoin_utils=$withval],
   [build_bitcoin_utils=yes])
 
 AC_ARG_ENABLE([util-cli],
   [AS_HELP_STRING([--enable-util-cli],
-  [build btcsq-cli])],
+  [build ocpandacoin-cli])],
   [build_bitcoin_cli=$enableval],
   [build_bitcoin_cli=$build_bitcoin_utils])
 
 AC_ARG_ENABLE([util-tx],
   [AS_HELP_STRING([--enable-util-tx],
-  [build btcsq-tx])],
+  [build ocpandacoin-tx])],
   [build_bitcoin_tx=$enableval],
   [build_bitcoin_tx=$build_bitcoin_utils])
 
 AC_ARG_ENABLE([util-wallet],
   [AS_HELP_STRING([--enable-util-wallet],
-  [build btcsq-wallet])],
+  [build ocpandacoin-wallet])],
   [build_bitcoin_wallet=$enableval],
   [build_bitcoin_wallet=$build_bitcoin_utils])
 
@@ -473,7 +473,7 @@ AC_ARG_WITH([libs],
 
 AC_ARG_WITH([daemon],
   [AS_HELP_STRING([--with-daemon],
-  [build btcsqd daemon (default=yes)])],
+  [build ocpandacoind daemon (default=yes)])],
   [build_bitcoind=$withval],
   [build_bitcoind=yes])
 
@@ -1382,19 +1382,19 @@ AM_CONDITIONAL([EMBEDDED_UNIVALUE],[test x$need_bundled_univalue = xyes])
 AC_SUBST(UNIVALUE_CFLAGS)
 AC_SUBST(UNIVALUE_LIBS)
 
-AC_MSG_CHECKING([whether to build btcsqd])
+AC_MSG_CHECKING([whether to build ocpandacoind])
 AM_CONDITIONAL([BUILD_BITCOIND], [test x$build_bitcoind = xyes])
 AC_MSG_RESULT($build_bitcoind)
 
-AC_MSG_CHECKING([whether to build btcsq-cli])
+AC_MSG_CHECKING([whether to build ocpandacoin-cli])
 AM_CONDITIONAL([BUILD_BITCOIN_CLI], [test x$build_bitcoin_cli = xyes])
 AC_MSG_RESULT($build_bitcoin_cli)
 
-AC_MSG_CHECKING([whether to build btcsq-tx])
+AC_MSG_CHECKING([whether to build ocpandacoin-tx])
 AM_CONDITIONAL([BUILD_BITCOIN_TX], [test x$build_bitcoin_tx = xyes])
 AC_MSG_RESULT($build_bitcoin_tx)
 
-AC_MSG_CHECKING([whether to build btcsq-wallet])
+AC_MSG_CHECKING([whether to build ocpandacoin-wallet])
 AM_CONDITIONAL([BUILD_BITCOIN_WALLET], [test x$build_bitcoin_wallet = xyes])
 AC_MSG_RESULT($build_bitcoin_wallet)
 

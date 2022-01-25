@@ -6,13 +6,16 @@ on:
       - master
       - develop
       - release/*
-      - mainnet
-      - test_deploy
+      - feature/*
+
 
   pull_request:
     branches:
       - master
+      - develop
       - release/*
+      - feature/*
+
 
 
 jobs:
@@ -35,7 +38,7 @@ jobs:
           BUILD_TYPE: ${{ matrix.build }}
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: veriblock/btcsq
+          name: overcookedpanda/OCPandaCoin
           username: ${{ secrets.PUBLIC_DOCKERHUB_USERNAME }}
           password: ${{ secrets.PUBLIC_DOCKERHUB_PASSWORD }}
           dockerfile: ubuntu.Dockerfile
@@ -62,7 +65,7 @@ jobs:
           BUILD_TYPE: ${{ matrix.build }}
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: veriblock/btcsq
+          name: overcookedpanda/OCPandaCoin
           username: ${{ secrets.PUBLIC_DOCKERHUB_USERNAME }}
           password: ${{ secrets.PUBLIC_DOCKERHUB_PASSWORD }}
           dockerfile: ubuntu-asan.Dockerfile
@@ -88,7 +91,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           dockerfile: alpine.Dockerfile
-          name: veriblock/btcsq
+          name: overcookedpanda/OCPandaCoin
           username: ${{ secrets.PUBLIC_DOCKERHUB_USERNAME }}
           password: ${{ secrets.PUBLIC_DOCKERHUB_PASSWORD }}
           tags: "${{ env.BRANCH }}-${{ env.GIT_HASH }},${{ github.sha }}"

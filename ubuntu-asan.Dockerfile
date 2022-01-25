@@ -35,11 +35,11 @@ RUN CC=gcc-7 CXX=g++-7 ./configure \
 RUN make -j4 install
 # remove source files to decrease image size
 RUN rm -rf /app
-ENV DATA_DIR=/home/btcsq/.btcsq
-RUN groupadd -r --gid 1001 btcsq
-RUN useradd --no-log-init -r --uid 1001 --gid 1001 --create-home --shell /bin/bash btcsq
+ENV DATA_DIR=/home/ocpandacoin/.ocpandacoin
+RUN groupadd -r --gid 1001 ocpandacoin
+RUN useradd --no-log-init -r --uid 1001 --gid 1001 --create-home --shell /bin/bash ocpandacoin
 RUN mkdir -p ${DATA_DIR}
 RUN chown -R 1001:1001 ${DATA_DIR}
-USER btcsq
+USER ocpandacoin
 
 WORKDIR $DATA_DIR

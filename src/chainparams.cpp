@@ -91,11 +91,11 @@ CMainParams::CMainParams()
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-    pchMessageStart[0] = 'V';
-    pchMessageStart[1] = 'B';
-    pchMessageStart[2] = 'K';
-    pchMessageStart[3] = 'm';
-    nDefaultPort = 8033;
+    pchMessageStart[0] = 'O';
+    pchMessageStart[1] = 'C';
+    pchMessageStart[2] = 'P';
+    pchMessageStart[3] = 'C';
+    nDefaultPort = 8077;
     nPruneAfterHeight = 100000;
     m_assumed_blockchain_size = 1;
     m_assumed_chain_state_size = 1;
@@ -108,8 +108,8 @@ CMainParams::CMainParams()
 
     // VeriBlock
     consensus.VeriBlockPopSecurityHeight = 1;
-    consensus.ZawyLWMAHeight = 200;
-    consensus.nZawyLwmaAveragingWindow = 150;
+    consensus.ZawyLWMAHeight = 100;
+    consensus.nZawyLwmaAveragingWindow = 50;
     assert(consensus.ZawyLWMAHeight > consensus.nZawyLwmaAveragingWindow);
 
     base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 0);
@@ -175,11 +175,11 @@ CMainParams::CMainParams()
      consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000000000aaaa");
      consensus.defaultAssumeValid = uint256S("0x0000000000000000000000000000000000000000000000000000000000000000");
 
-     pchMessageStart[0] = 2;
-     pchMessageStart[1] = 2;
-     pchMessageStart[2] = 2;
-     pchMessageStart[3] = 2;
-     nDefaultPort = 18333;
+     pchMessageStart[0] = 'O';
+     pchMessageStart[1] = 'C';
+     pchMessageStart[2] = 'P';
+     pchMessageStart[3] = 'T';
+     nDefaultPort = 18777;
      nPruneAfterHeight = 1000;
      m_assumed_blockchain_size = 1;
      m_assumed_chain_state_size = 1;
@@ -194,8 +194,8 @@ CMainParams::CMainParams()
 
      // VeriBlock
      consensus.VeriBlockPopSecurityHeight = 1;
-     consensus.ZawyLWMAHeight = 200;
-     consensus.nZawyLwmaAveragingWindow = 150;
+     consensus.ZawyLWMAHeight = 100;
+     consensus.nZawyLwmaAveragingWindow = 50;
      assert(consensus.ZawyLWMAHeight > consensus.nZawyLwmaAveragingWindow);
 
      base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 111);
@@ -252,11 +252,11 @@ CRegTestParams::CRegTestParams(const ArgsManager& args)
     consensus.nMinimumChainWork = uint256{};
     consensus.defaultAssumeValid = uint256{};
 
-    pchMessageStart[0] = 3;
-    pchMessageStart[1] = 3;
-    pchMessageStart[2] = 3;
-    pchMessageStart[3] = 3;
-    nDefaultPort = 18444;
+    pchMessageStart[0] = 'O';
+    pchMessageStart[1] = 'C';
+    pchMessageStart[2] = 'P';
+    pchMessageStart[3] = 'R';
+    nDefaultPort = 18477;
     nPruneAfterHeight = 1000;
     m_assumed_blockchain_size = 0;
     m_assumed_chain_state_size = 0;
@@ -386,11 +386,11 @@ CDetRegTestParams::CDetRegTestParams(const ArgsManager& args)
     consensus.nMinimumChainWork = uint256{};
     consensus.defaultAssumeValid = uint256{};
 
-    pchMessageStart[0] = 3;
-    pchMessageStart[1] = 3;
-    pchMessageStart[2] = 3;
-    pchMessageStart[3] = 3;
-    nDefaultPort = 18555;
+    pchMessageStart[0] = 'O';
+    pchMessageStart[1] = 'C';
+    pchMessageStart[2] = 'P';
+    pchMessageStart[3] = 'R';
+    nDefaultPort = 18577;
     nPruneAfterHeight = 1000;
     m_assumed_blockchain_size = 0;
     m_assumed_chain_state_size = 0;

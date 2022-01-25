@@ -71,7 +71,7 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-const char * const BITCOIN_CONF_FILENAME = "btcsq.conf";
+const char * const BITCOIN_CONF_FILENAME = "ocpandacoin.conf";
 
 ArgsManager gArgs;
 
@@ -565,7 +565,7 @@ fs::path GetDefaultDataDir()
     // Unix: ~/.bitcoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "BTCSQ";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "OCPandaCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -575,10 +575,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/BTCSQ";
+    return pathRet / "Library/Application Support/OCPandaCoin";
 #else
     // Unix
-    return pathRet / ".btcsq";
+    return pathRet / ".ocpandacoin";
 #endif
 #endif
 }

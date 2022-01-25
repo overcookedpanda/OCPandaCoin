@@ -21,8 +21,8 @@ RUN make -j$(nproc)
 RUN make install
 RUN rm -rf ${BERKELEYDB_PREFIX}/docs
 
-# Build stage for BTCSQ Core
-FROM alpine as btcsq-core
+# Build stage for OCPandaCoin Core
+FROM alpine as ocpandacoin-core
 
 COPY --from=berkeleydb /opt /opt
 
@@ -52,11 +52,11 @@ RUN set -ex \
     gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$key" ; \
   done
 
-ENV BTCSQ_PREFIX=/opt/btcsq
+ENV OCPandaCoin_PREFIX=/opt/ocpandacoin
 
-COPY . /btcsq
+COPY . /ocpandacoin
 
-WORKDIR /btcsq
+WORKDIR /ocpandacoin
 
 # Install alt-integration-cpp
 RUN export VERIBLOCK_POP_CPP_VERSION=$(awk -F '=' '/\$\(package\)_version/{print $NF}' $PWD/depends/packages/veriblock-pop-cpp.mk | head -n1); \
@@ -81,7 +81,7 @@ RUN ./configure LDFLAGS=-L`ls -d /opt/db-*`/lib/ CPPFLAGS=-I`ls -d /opt/db-*`/in
     --without-gui \
     --with-libs=no \
     --with-daemon \
-    --prefix=${BTCSQ_PREFIX}
+    --prefix=${OCPandaCoin_PREFIX}
 
 RUN make -j$(nproc) install
 
@@ -96,16 +96,16 @@ RUN apk --no-cache add \
   su-exec \
   git
 
-ENV DATA_DIR=/home/btcsq/.btcsq
-ENV BTCSQ_PREFIX=/opt/btcsq
-ENV PATH=${BTCSQ_PREFIX}/bin:$PATH
+ENV DATA_DIR=/home/ocpandacoin/.ocpandacoin
+ENV OCPandaCoin_PREFIX=/opt/ocpandacoin
+ENV PATH=${OCPandaCoin_PREFIX}/bin:$PATH
 
-COPY --from=btcsq-core /opt /opt
+COPY --from=ocpandacoin-core /opt /opt
 
 RUN mkdir -p ${DATA_DIR}
 RUN set -x \
-    && addgroup -g 1001 -S btcsq \
-    && adduser -u 1001 -D -S -G btcsq btcsq
+    && addgroup -g 1001 -S ocpandacoin \
+    && adduser -u 1001 -D -S -G ocpandacoin ocpandacoin
 RUN chown -R 1001:1001 ${DATA_DIR}
-USER btcsq
+USER ocpandacoin
 WORKDIR $DATA_DIR
