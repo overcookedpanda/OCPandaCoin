@@ -3,7 +3,7 @@ import sys
 
 from pypoptools.pypoptesting.framework.node import Node
 from pypoptools.pypoptesting.test_runner import tests_running
-from btcsqd_node import BTCSQdNode
+from ocpandacoind_node import OCPandaCoindNode
 
 
 def create_node(number: int, path: pathlib.Path) -> Node:
