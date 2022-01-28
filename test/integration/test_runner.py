@@ -7,7 +7,7 @@ from ocpandacoind_node import OCPandaCoindNode
 
 
 def create_node(number: int, path: pathlib.Path) -> Node:
-    return BTCSQdNode(number=number, datadir=path)
+    return OCPandaCoindNode(number=number, datadir=path)
 
 
 if __name__ == '__main__':
