@@ -23,7 +23,7 @@ def generate_genesis_block(
         nTime: int,
         nBits: int,
         nVersion: int,
-        pszTimestamp: str = "Overcooked Panda",
+        pszTimestamp: str = "ocpanda",
         txouts: List[CTxOut] = []
 ):
     PREV = b'\x00' * 32
