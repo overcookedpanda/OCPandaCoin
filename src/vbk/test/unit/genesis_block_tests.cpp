@@ -29,7 +29,7 @@ struct GenesisBlockFixture {
         bool result = CheckBlock(block, state, params.GetConsensus(), true);
         BOOST_CHECK(result);
         if (!result) {
-            printf("State: %s\n", state.GetDebugMessage().c_str());
+            printf("State: %s %s\n", state.GetRejectReason().c_str(), state.GetDebugMessage().c_str());
         }
     }
     std::string initialPubkey = "047c62bbf7f5aa4dd5c16bad99ac621b857fac4e93de86e45f5ada73404eeb44dedcf377b03c14a24e9d51605d9dd2d8ddaef58760d9c4bb82d9c8f06d96e79488";
