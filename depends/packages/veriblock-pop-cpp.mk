@@ -1,8 +1,8 @@
 package=veriblock-pop-cpp
-$(package)_version=48a3c8d494a93c46323189f72bc9f5fdfea150fb
+$(package)_version=1beffc9d12147caa221e2cc0c440ea7c1fd675a8
 $(package)_download_path=https://github.com/VeriBlock/alt-integration-cpp/archive/
 $(package)_file_name=$($(package)_version).tar.gz
-$(package)_sha256_hash=41a239fc2386c9ed2f4637aa7a3c8cf701752cb33255f8b0759c94e5268efea6
+$(package)_sha256_hash=0d66561ef852a70639b55a273c2198044bee2e3d1cc25f03835a8c7b3965c49b
 $(package)_build_subdir=build
 $(package)_build_type=$(BUILD_TYPE)
 $(package)_asan=$(ASAN)
@@ -30,10 +30,17 @@ else ifeq ($(HOST), x86_64-pc-linux-gnu)
     cmake -DCMAKE_INSTALL_PREFIX=$(host_prefix) -DCMAKE_BUILD_TYPE=$(package)_build_type \
     -DTESTING=OFF -DSHARED=OFF ..
   endef
+else ifeq ($(HOST), x86_64-w64-mingw32)
+  define $(package)_config_cmds
+    cmake -DCMAKE_INSTALL_PREFIX=$(host_prefix) -DCMAKE_BUILD_TYPE=$(package)_build_type \
+    -DTESTING=OFF -DSHARED=OFF --toolchain ../cmake/toolchain/$(HOST).cmake ..
+  endef
 else
   define $(package)_config_cmds
+    echo "HOST: $(HOST)"
     cmake -DCMAKE_C_COMPILER=$(HOST)-gcc -DCMAKE_CXX_COMPILER=$(HOST)-g++ \
-    -DCMAKE_INSTALL_PREFIX=$(host_prefix) -DTESTING=OFF -DSHARED=OFF ..
+    -DCMAKE_INSTALL_PREFIX=$(host_prefix) -DTESTING=OFF -DSHARED=OFF 
+    -DCMAKE_BUILD_TYPE=$(package)_build_type ..
   endef
 endif
 
