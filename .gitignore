@@ -8,11 +8,11 @@ src/vbk/grpc_integration/*.pb.h
 
 *.exe
 *.pdb
-src/btcsq
-src/btcsqd
-src/btcsq-cli
-src/btcsq-tx
-src/btcsq-wallet
+src/ocpandacoin
+src/ocpandacoind
+src/ocpandacoin-cli
+src/ocpandacoin-tx
+src/ocpandacoin-wallet
 src/test/test_bitcoin
 src/test/test_bitcoin_fuzzy
 src/qt/test/test_bitcoin-qt
@@ -56,11 +56,11 @@ src/qt/forms/ui_*.h
 
 src/qt/test/moc*.cpp
 
-src/qt/btcsq-qt.config
-src/qt/btcsq-qt.creator
-src/qt/btcsq-qt.creator.user
-src/qt/btcsq-qt.files
-src/qt/btcsq-qt.includes
+src/qt/ocpandacoin-qt.config
+src/qt/ocpandacoin-qt.creator
+src/qt/ocpandacoin-qt.creator.user
+src/qt/ocpandacoin-qt.files
+src/qt/ocpandacoin-qt.includes
 
 .deps
 .dirstamp
@@ -97,8 +97,8 @@ src/qt/btcsq-qt.includes
 *.qm
 Makefile
 !depends/Makefile
-btcsq-qt
-BTCSQ-Qt.app
+ocpandacoin-qt
+OCPandaCoin-Qt.app
 background.tiff*
 
 # Qt Creator
@@ -162,6 +162,3 @@ configure~
 confdefs.h
 conftest
 conftest.*
-
-ocpandacoind
-ocpandacoin-*
