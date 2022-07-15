@@ -4244,7 +4244,7 @@ CBlockIndex* BlockManager::InsertBlockIndex(const uint256& hash)
 bool BlockManager::LoadBlockIndex(
     const Consensus::Params& consensus_params,
     CBlockTreeDB& blocktree,
-    std::set<CBlockIndex*, CBlockIndexWorkComparator>& block_index_candidates)
+    std::set<CBlockIndex*, CBlockIndexWorkComparator>& block_index_candidates, bool pop_fast_load)
 {
     if (!blocktree.LoadBlockIndexGuts(consensus_params, [this](const uint256& hash) EXCLUSIVE_LOCKS_REQUIRED(cs_main) { return this->InsertBlockIndex(hash); }))
         return false;
@@ -4303,7 +4303,7 @@ bool BlockManager::LoadBlockIndex(
         AssertLockHeld(cs_main);
 
         // load blocks
-        if(!VeriBlock::loadTrees()) {
+        if(!VeriBlock::loadTrees(pop_fast_load)) {
             return false;
         }
 
@@ -4337,10 +4337,10 @@ void BlockManager::Unload()
     m_block_index.clear();
 }
 
-bool static LoadBlockIndexDB(const CChainParams& chainparams) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
+bool static LoadBlockIndexDB(const CChainParams& chainparams, bool pop_fast_load) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
 {
     if (!g_blockman.LoadBlockIndex(
-            chainparams.GetConsensus(), *pblocktree, ::ChainstateActive().setBlockIndexCandidates))
+            chainparams.GetConsensus(), *pblocktree, ::ChainstateActive().setBlockIndexCandidates, pop_fast_load))
         return false;
 
     // Load block file info
@@ -4795,12 +4795,12 @@ void UnloadBlockIndex()
     ::ChainstateActive().UnloadBlockIndex();
 }
 
-bool LoadBlockIndex(const CChainParams& chainparams)
+bool LoadBlockIndex(const CChainParams& chainparams, bool pop_fast_load)
 {
     // Load block index from databases
     bool needs_init = fReindex;
     if (!fReindex) {
-        bool ret = LoadBlockIndexDB(chainparams);
+        bool ret = LoadBlockIndexDB(chainparams, pop_fast_load);
         if (!ret) return false;
         needs_init = g_blockman.m_block_index.empty();
     }
