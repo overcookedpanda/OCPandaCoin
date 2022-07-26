@@ -1,15 +1,24 @@
 *.tar.gz
+.vscode
+*.idx
+
+BTCSQ_state_test
+src/vbk/grpc_integration/*.pb.cc
+src/vbk/grpc_integration/*.pb.h
 
 *.exe
 *.pdb
-src/bitcoin
-src/bitcoind
-src/bitcoin-cli
-src/bitcoin-tx
-src/bitcoin-wallet
+src/ocpandacoin
+src/ocpandacoind
+src/ocpandacoin-cli
+src/ocpandacoin-tx
+src/ocpandacoin-wallet
 src/test/test_bitcoin
 src/test/test_bitcoin_fuzzy
 src/qt/test/test_bitcoin-qt
+
+# functional tests
+test/functional/temp
 
 # autoreconf
 Makefile.in
@@ -47,11 +56,11 @@ src/qt/forms/ui_*.h
 
 src/qt/test/moc*.cpp
 
-src/qt/bitcoin-qt.config
-src/qt/bitcoin-qt.creator
-src/qt/bitcoin-qt.creator.user
-src/qt/bitcoin-qt.files
-src/qt/bitcoin-qt.includes
+src/qt/ocpandacoin-qt.config
+src/qt/ocpandacoin-qt.creator
+src/qt/ocpandacoin-qt.creator.user
+src/qt/ocpandacoin-qt.files
+src/qt/ocpandacoin-qt.includes
 
 .deps
 .dirstamp
@@ -88,8 +97,8 @@ src/qt/bitcoin-qt.includes
 *.qm
 Makefile
 !depends/Makefile
-bitcoin-qt
-Bitcoin-Qt.app
+ocpandacoin-qt
+OCPandaCoin-Qt.app
 background.tiff*
 
 # Qt Creator
@@ -137,3 +146,19 @@ db4/
 osx_volname
 dist/
 *.background.tiff
+
+*.tmp
+compile_commands.json
+.idea
+.scannerwork
+.project
+.cproject
+.settings
+configure.lineno
+*.pb.*
+btcsq*
+!test/integration/btcsqd_node.py
+configure~
+confdefs.h
+conftest
+conftest.*
