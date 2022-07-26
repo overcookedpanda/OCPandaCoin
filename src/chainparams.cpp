@@ -112,13 +112,13 @@ CMainParams::CMainParams()
     consensus.nZawyLwmaAveragingWindow = 50;
     assert(consensus.ZawyLWMAHeight > consensus.nZawyLwmaAveragingWindow);
 
-    base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 0);
-    base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 5);
+    base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 55); // P
+    base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 58); // Q
     base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 128);
     base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
     base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
-    bech32_hrp = "bc";
+    bech32_hrp = "pc";
 
     vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
     vSeeds.clear(); // Clear DNS seeds
@@ -198,13 +198,13 @@ CMainParams::CMainParams()
      consensus.nZawyLwmaAveragingWindow = 50;
      assert(consensus.ZawyLWMAHeight > consensus.nZawyLwmaAveragingWindow);
 
-     base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 111);
-     base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 196);
+     base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 117); // p
+     base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 120); // q
      base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 239);
      base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
      base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-     bech32_hrp = "tb";
+     bech32_hrp = "tp";
 
      vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -295,13 +295,13 @@ CRegTestParams::CRegTestParams(const ArgsManager& args)
         assert(consensus.ZawyLWMAHeight > consensus.nZawyLwmaAveragingWindow);
     }
 
-    base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 111);
-    base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 196);
+    base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 117); // p
+    base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 120); // q
     base58Prefixes[SECRET_KEY] = std::vector<unsigned char>(1, 239);
     base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
     base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-    bech32_hrp = "bcrt";
+    bech32_hrp = "pcrt";
 }
 
 /**
