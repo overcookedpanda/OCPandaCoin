@@ -287,7 +287,7 @@ def generate_genesis_block(
 
     # create input
     scriptSig = CScript() + script_with_prefix(nBits) + pszTimestamp.encode('ascii')
-    assert 2 <= len(scriptSig.cmd) <= 100
+    assert 2 <= len(scriptSig.cmds) <= 100
 
     # create coinbase tx
     tx = Tx(
@@ -333,8 +333,8 @@ def generate_genesis_block(
             print("Can not find a solution...")
 
 def main():
-    pszTimestamp = "VeriBlock Bitcoin Reference Implementation, Sept 13, 2021"
-    timestamp = 1631200000
+    pszTimestamp = "Overcooked Panda forks VBK reference for PoP enabled coins - July 28, 2022"
+    timestamp = 1658962781
 
     out = CTxOut(
         scriptPubKey=CScript() + OpCode(0x00) + bytes.fromhex("3dd5f2f667315cc98e669deb88d3dfe831aa2cea"),
