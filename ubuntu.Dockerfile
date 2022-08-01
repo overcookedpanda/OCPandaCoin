@@ -4,6 +4,7 @@ ADD . /app
 WORKDIR /app
 ARG BUILD_TYPE=Release
 
+RUN pip3 install --upgrade pip
 RUN pip3 install cmake
 
 ENV BUILD=${BUILD_TYPE}

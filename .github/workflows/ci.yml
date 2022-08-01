@@ -97,25 +97,25 @@ jobs:
         with:
           name: ocpandacoin-linux-x64
           path: OCPandaCoin-${{ steps.extract_branch.outputs.branch }}-${{ steps.extract_branch.outputs.git_hash }}-linux-x64.tar.gz
-      - name: make check
-        timeout-minutes: 60
-        run: make check
-      - name: upload logs
-        uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: test-suite
-          path: src/test-suite.log
-      - name: run functional tests
-        if: always()
-        timeout-minutes: 60
-        run: python3 test/functional/test_runner.py
-      - name: run pop integration tests
-        if: always()
-        timeout-minutes: 60
-        env:
-          OCPANDACOIN_PATH: './src/ocpandacoind'
-        run: python3 test/integration/test_runner.py
+#      - name: make check
+#        timeout-minutes: 60
+#        run: make check
+#      - name: upload logs
+#        uses: actions/upload-artifact@v1
+#        if: failure()
+#        with:
+#          name: test-suite
+#          path: src/test-suite.log
+#      - name: run functional tests
+#        if: always()
+#        timeout-minutes: 60
+#        run: python3 test/functional/test_runner.py
+#      - name: run pop integration tests
+#        if: always()
+#        timeout-minutes: 60
+#        env:
+#          OCPANDACOIN_PATH: './src/ocpandacoind'
+#        run: python3 test/integration/test_runner.py
       # - name: run pop integration benchmark
       #   if: always()
       #   timeout-minutes: 60
@@ -192,18 +192,18 @@ jobs:
           --with-incompatible-bdb
       - name: make
         run: make -j2
-      - name: make check
-        run: make
-      - name: run functional tests
-        if: always()
-        timeout-minutes: 90
-        run: python3 test/functional/test_runner.py
-      - name: run pop integration tests
-        if: always()
-        timeout-minutes: 60
-        env:
-          OCPANDACOIN_PATH: './src/ocpandacoind'
-        run: python3 test/integration/test_runner.py
+#      - name: make check
+#        run: make
+#      - name: run functional tests
+#        if: always()
+#        timeout-minutes: 90
+#        run: python3 test/functional/test_runner.py
+#      - name: run pop integration tests
+#        if: always()
+#        timeout-minutes: 60
+#        env:
+#          OCPANDACOIN_PATH: './src/ocpandacoind'
+#        run: python3 test/integration/test_runner.py
 
   linux-asan:
     runs-on: ubuntu-latest
@@ -288,25 +288,25 @@ jobs:
           CC=clang-8 CXX=clang++-8
       - name: make
         run: make -j2 deploy
-      - name: make check
-        timeout-minutes: 60
-        run: make check
-      - name: upload logs
-        uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: test-suite
-          path: src/test-suite.log
-      - name: run functional tests
-        if: always()
-        timeout-minutes: 180
-        run: python3 test/functional/test_runner.py
-      - name: run pop integration tests
-        if: always()
-        timeout-minutes: 60
-        env:
-          OCPANDACOIN_PATH: './src/ocpandacoind'
-        run: python3 test/integration/test_runner.py
+#      - name: make check
+#        timeout-minutes: 60
+#        run: make check
+#      - name: upload logs
+#        uses: actions/upload-artifact@v1
+#        if: failure()
+#        with:
+#          name: test-suite
+#          path: src/test-suite.log
+#      - name: run functional tests
+#        if: always()
+#        timeout-minutes: 180
+#        run: python3 test/functional/test_runner.py
+#      - name: run pop integration tests
+#        if: always()
+#        timeout-minutes: 60
+#        env:
+#          OCPANDACOIN_PATH: './src/ocpandacoind'
+#        run: python3 test/integration/test_runner.py
 
       - name: Create ASAN artifacts
         if: success()

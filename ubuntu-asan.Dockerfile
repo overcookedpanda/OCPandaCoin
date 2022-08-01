@@ -3,6 +3,7 @@ FROM veriblock/prerelease-btc
 ADD . /app
 WORKDIR /app
 
+RUN pip3 install --upgrade pip
 RUN pip3 install cmake
 
 RUN apt-get update && \
