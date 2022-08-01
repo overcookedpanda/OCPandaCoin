@@ -100,11 +100,11 @@ CMainParams::CMainParams()
     m_assumed_blockchain_size = 1;
     m_assumed_chain_state_size = 1;
     // clang-format off
-    genesis = VeriBlock::CreateGenesisBlock(1658838850, 1396044879, 0x1d00ffff, 1, "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff5104ffff001d0104494f766572636f6f6b6564205061032303232ffffffff0100f2052a010000001600143dd5f2f667315cc98e669deb88d3dfe831aa2cea00000000");
+    genesis = VeriBlock::CreateGenesisBlock(1658962781, 412290321, 0x1d00ffff, 1, 50 * COIN, "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff5004ffff001d0104484f766572636f6f6b65642050616e646120666f726b732056424b207265666572656e636520666f7220506f5020656e61626c656420636f696e73202d2046656220312c2032303232ffffffff0100f2052a010000001600143dd5f2f667315cc98e669deb88d3dfe831aa2cea00000000", "Overcooked Panda forks VBK reference for PoP enabled coins - July 28, 2022");
     // clang-format on
     consensus.hashGenesisBlock = genesis.GetHash();
-    assert(consensus.hashGenesisBlock == uint256S("0x00000000d0409380615d2f2752c57f87b927588bd3f7e03035bbfa93fbf94bb2"));
-    assert(genesis.hashMerkleRoot == uint256S("0x9676d0b223b5aed9b5b2a5c30eeeb46ee6aa17c5fe48c0a769826e9355fdcd27"));
+    assert(consensus.hashGenesisBlock == uint256S("0x00000000f9fcdee22c7e290627e529342618ca88d818ba2468f61b8f8d7fe91d"));
+    assert(genesis.hashMerkleRoot == uint256S("0x929f2d4e33e4c3004b26a5cd77579a64493f1c9c0031e2589d7e8cfb0c864732"));
 
     // VeriBlock
     consensus.VeriBlockPopSecurityHeight = 1;
