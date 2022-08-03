@@ -37,44 +37,44 @@ struct GenesisBlockFixture {
 
 BOOST_FIXTURE_TEST_CASE(main, GenesisBlockFixture)
 {
-//        // Do the actual block mining
-//        {
-//            init("main");
-//
-//            CBlock block = VeriBlock::MineGenesisBlock(
-//                1658962780,
-//                pszTimestamp,
-//                initialPubkey,
-//                0x1d00ffff,
-//                1,
-//                0,
-//                50 * COIN);
-//
-//            printf("%s\n", block.ToString().c_str());
-//        }
+       // Do the actual block mining
+    //    {
+    //        init("main");
 
-    check("main");
+    //        CBlock block = VeriBlock::MineGenesisBlock(
+    //            1659548367,
+    //            pszTimestamp,
+    //            initialPubkey,
+    //            0x1d07ffff,
+    //            1,
+    //            0,
+    //            50 * COIN);
+
+    //        printf("%s\n", block.ToString().c_str());
+    //    }
+
+    // check("main");
 }
 
 BOOST_FIXTURE_TEST_CASE(test, GenesisBlockFixture)
 {
-//        // Do the actual block mining
-//        {
-//            init("test");
-//
-//            CBlock block = VeriBlock::MineGenesisBlock(
-//                1340,
-//                pszTimestamp,
-//                initialPubkey,
-//                0x1d1fffff, // 30 sec on macbook pro 2013
-//                1,
-//                0,
-//                50 * COIN);
-//
-//            printf("%s\n", block.ToString().c_str());
-//        }
+       // Do the actual block mining
+    //    {
+    //        init("test");
 
-    check("test");
+    //        CBlock block = VeriBlock::MineGenesisBlock(
+    //            1659549102,
+    //            pszTimestamp,
+    //            initialPubkey,
+    //            0x1d1fffff, // 30 sec on macbook pro 2013
+    //            1,
+    //            0,
+    //            50 * COIN);
+
+    //        printf("%s\n", block.ToString().c_str());
+    //    }
+
+    // check("test");
 }
 
 BOOST_FIXTURE_TEST_CASE(regtest, GenesisBlockFixture)
