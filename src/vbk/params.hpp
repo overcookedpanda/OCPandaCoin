@@ -22,7 +22,7 @@ struct AltChainParamsBTCSQ : public altintegration::AltChainParams {
     explicit AltChainParamsBTCSQ(const CBlock& genesis, int32_t window)
     {
         // if block time changes, update altchain id. see altchain id comment.
-        assert(altintegration::getMaxAtvsInVbkBlock(VeriBlock::ALT_CHAIN_ID) == 20);
+        assert(altintegration::getMaxAtvsInVbkBlock(VeriBlock::ALT_CHAIN_ID) == 4);
 
         bootstrap.hash = genesis.GetHash().asVector();
         // intentionally leave prevHash empty
