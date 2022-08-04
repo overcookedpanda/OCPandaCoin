@@ -1,0 +1,47 @@
+FROM veriblock/prerelease-btc
+
+ADD . /app
+WORKDIR /app
+
+RUN pip3 install --upgrade pip
+RUN pip3 install cmake
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+        gdb \
+        valgrind \
+        llvm
+
+RUN export VERIBLOCK_POP_CPP_VERSION=$(awk -F '=' '/\$\(package\)_version/{print $NF}' $PWD/depends/packages/veriblock-pop-cpp.mk | head -n1); \
+    (\
+     cd /opt; \
+     wget https://github.com/VeriBlock/alt-integration-cpp/archive/${VERIBLOCK_POP_CPP_VERSION}.tar.gz; \
+     tar -xf ${VERIBLOCK_POP_CPP_VERSION}.tar.gz; \
+     cd alt-integration-cpp-${VERIBLOCK_POP_CPP_VERSION}; \
+     mkdir build; \
+     cd build; \
+     cmake .. -DCMAKE_BUILD_TYPE=Debug -DASAN=ON -DTESTING=OFF; \
+     make -j2 install \
+    )
+
+RUN ./autogen.sh
+RUN CC=gcc-7 CXX=g++-7 ./configure \
+  --without-gui \
+  --disable-tests \
+  --disable-bench \
+  --disable-ccache \
+  --disable-man \
+  --with-libs=no \
+  --enable-debug \
+  --with-sanitizers=address
+RUN make -j4 install
+# remove source files to decrease image size
+RUN rm -rf /app
+ENV DATA_DIR=/home/ocpandacoin/.ocpandacoin
+RUN groupadd -r --gid 1001 ocpandacoin
+RUN useradd --no-log-init -r --uid 1001 --gid 1001 --create-home --shell /bin/bash ocpandacoin
+RUN mkdir -p ${DATA_DIR}
+RUN chown -R 1001:1001 ${DATA_DIR}
+USER ocpandacoin
+
+WORKDIR $DATA_DIR

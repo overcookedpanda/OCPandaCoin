@@ -5,49 +5,49 @@
 # See "man systemd.service" for details.
 
 # Note that almost all daemon options could be specified in
-# /etc/bitcoin/bitcoin.conf, but keep in mind those explicitly
+# /etc/ocpandacoin/ocpandacoin.conf, but keep in mind those explicitly
 # specified as arguments in ExecStart= will override those in the
 # config file.
 
 [Unit]
-Description=Bitcoin daemon
+Description=OCPandaCoin daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/bitcoind -daemon \
-                            -pid=/run/bitcoind/bitcoind.pid \
-                            -conf=/etc/bitcoin/bitcoin.conf \
-                            -datadir=/var/lib/bitcoind
+ExecStart=/usr/bin/ocpandacoind -daemon \
+                            -pid=/run/ocpandacoind/ocpandacoind.pid \
+                            -conf=/etc/ocpandacoin/ocpandacoin.conf \
+                            -datadir=/var/lib/ocpandacoind
 
 # Make sure the config directory is readable by the service user
 PermissionsStartOnly=true
-ExecStartPre=/bin/chgrp bitcoin /etc/bitcoin
+ExecStartPre=/bin/chgrp ocpandacoin /etc/ocpandacoin
 
 # Process management
 ####################
 
 Type=forking
-PIDFile=/run/bitcoind/bitcoind.pid
+PIDFile=/run/ocpandacoind/ocpandacoind.pid
 Restart=on-failure
 TimeoutStopSec=600
 
 # Directory creation and permissions
 ####################################
 
-# Run as bitcoin:bitcoin
-User=bitcoin
-Group=bitcoin
+# Run as ocpandacoin:ocpandacoin
+User=ocpandacoin
+Group=ocpandacoin
 
-# /run/bitcoind
-RuntimeDirectory=bitcoind
+# /run/ocpandacoind
+RuntimeDirectory=ocpandacoind
 RuntimeDirectoryMode=0710
 
-# /etc/bitcoin
-ConfigurationDirectory=bitcoin
+# /etc/ocpandacoin
+ConfigurationDirectory=ocpandacoin
 ConfigurationDirectoryMode=0710
 
-# /var/lib/bitcoind
-StateDirectory=bitcoind
+# /var/lib/ocpandacoind
+StateDirectory=ocpandacoind
 StateDirectoryMode=0710
 
 # Hardening measures
