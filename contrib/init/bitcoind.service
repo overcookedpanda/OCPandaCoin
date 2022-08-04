@@ -5,49 +5,49 @@
 # See "man systemd.service" for details.
 
 # Note that almost all daemon options could be specified in
-# /etc/btcsq/btcsq.conf, but keep in mind those explicitly
+# /etc/ocpandacoin/ocpandacoin.conf, but keep in mind those explicitly
 # specified as arguments in ExecStart= will override those in the
 # config file.
 
 [Unit]
-Description=BTCSQ daemon
+Description=OCPandaCoin daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/btcsqd -daemon \
-                            -pid=/run/btcsqd/btcsqd.pid \
-                            -conf=/etc/btcsq/btcsq.conf \
-                            -datadir=/var/lib/btcsqd
+ExecStart=/usr/bin/ocpandacoind -daemon \
+                            -pid=/run/ocpandacoind/ocpandacoind.pid \
+                            -conf=/etc/ocpandacoin/ocpandacoin.conf \
+                            -datadir=/var/lib/ocpandacoind
 
 # Make sure the config directory is readable by the service user
 PermissionsStartOnly=true
-ExecStartPre=/bin/chgrp btcsq /etc/btcsq
+ExecStartPre=/bin/chgrp ocpandacoin /etc/ocpandacoin
 
 # Process management
 ####################
 
 Type=forking
-PIDFile=/run/btcsqd/btcsqd.pid
+PIDFile=/run/ocpandacoind/ocpandacoind.pid
 Restart=on-failure
 TimeoutStopSec=600
 
 # Directory creation and permissions
 ####################################
 
-# Run as btcsq:btcsq
-User=btcsq
-Group=btcsq
+# Run as ocpandacoin:ocpandacoin
+User=ocpandacoin
+Group=ocpandacoin
 
-# /run/btcsqd
-RuntimeDirectory=btcsqd
+# /run/ocpandacoind
+RuntimeDirectory=ocpandacoind
 RuntimeDirectoryMode=0710
 
-# /etc/btcsq
-ConfigurationDirectory=btcsq
+# /etc/ocpandacoin
+ConfigurationDirectory=ocpandacoin
 ConfigurationDirectoryMode=0710
 
-# /var/lib/btcsqd
-StateDirectory=btcsqd
+# /var/lib/ocpandacoind
+StateDirectory=ocpandacoind
 StateDirectoryMode=0710
 
 # Hardening measures
